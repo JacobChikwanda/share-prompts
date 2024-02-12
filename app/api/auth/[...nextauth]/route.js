@@ -27,7 +27,7 @@ const handler = NextAuth({
                 if (!userExists) {
                     await create_user({
                         email: profile.email,
-                        image: profile.image,
+                        image: profile.picture,
                         username: profile.name
                     })
                 }
