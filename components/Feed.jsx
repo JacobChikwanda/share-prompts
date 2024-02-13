@@ -2,13 +2,23 @@
 
 import { useEffect, useState } from "react";
 import PromptCardList from "./PromptCardList";
+import { filterData } from "@utils/filter";
 
 const Feed = () => {
 
   const [search, setSearch] = useState('');
   const [posts, setPosts] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
-  const handleSearchChange = async (e) => {}
+  const handleSearchChange = (e) => {
+    e.preventDefault()
+    setSearch(e.target.value);
+    
+    // Filter data
+    const newPosts = filterData({ searchQuery: e.target.value, data: posts })
+    console.log(newPosts);
+    setFilteredData(newPosts);
+  }
 
   // Fetch data
   useEffect(() => {
@@ -19,7 +29,7 @@ const Feed = () => {
     }
 
     fetchPosts();
-  })
+  }, [])
 
   return (
     <section className="feed">
@@ -34,8 +44,7 @@ const Feed = () => {
       </form>
 
       <PromptCardList
-        data={posts}
-        handleTagClick={() => {}}
+        data={search ? filteredData : posts}
       />
     </section>
   )
